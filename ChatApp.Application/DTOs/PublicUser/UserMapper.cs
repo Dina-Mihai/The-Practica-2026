@@ -2,19 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace ChatApp.Application.DTOs.PublicUser
 {
     public static class UserMapper
     {
-        public static UserDTO MapToDTO(User _user)
+        public static UserDTO MapToDTO_User(User user)
         {
             return new UserDTO
             {
-                
+                UserName = user.UserName,
+                UserID = user.Id
             };
 
         }
