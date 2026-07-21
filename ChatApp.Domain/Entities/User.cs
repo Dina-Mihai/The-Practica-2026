@@ -4,19 +4,20 @@ namespace ChatApp.Domain.Entities
 {
     public class User
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public int  Id { get; set; }
-
-        public User(string name, string password, string email, int id)
-        {
-            UserName = name;
-            Password = password;
-            Email = email;
-            Id = id;
-        }
+        String Name;
+        String Password;//care este diferenta
+        string Email;
+        float  Id;
     }
-
 }
 
+
+/*clase: user:-nume
+ *            -parola
+ *            -adresa de mail
+ *            -user name
+ *            -#poza
+ *            -id
+ *            -#data de creare
+ */
+//nu am acces la fiserul README.mb in visualstudio

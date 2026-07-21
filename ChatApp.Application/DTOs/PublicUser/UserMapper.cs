@@ -14,8 +14,7 @@ namespace ChatApp.Application.DTOs.PublicUser
         {
             return new UserDTO
             {
-                UserName= _user.UserName,
-                ID=_user.Id
+                
             };
 
         }

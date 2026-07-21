@@ -5,31 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChatApp.Domain.Entities
-{//trebuie sa las internal sau public
+{
 
     public class Message
     {
-        //daca nu scriu public imi face automat privat?
-        DateOnly SentDate;
-        TimeOnly SentTime;
-        string SenderID;
-        string RiceiverID;
+      
+        public DateOnly SentDate { get; set; }
+        public TimeOnly SentTime { get; set; }
+        public string SenderID { get; set; }
+        public string ReceiverID { get; set; }
+
+        public Message(DateOnly _sent_date , TimeOnly _sent_time, string _sender_id, string _riciver_id)
+        {
+            SentDate = _sent_date;
+            SentTime = _sent_time;
+            SenderID = _sender_id;
+            ReceiverID = _riciver_id;
+        }
 
 
-    }
-    //DTO trebuie facut in acelasi fiser cu clasa?+nu inteleg exact cum se face
-    public class MessageDTO
-    {
-        DateOnly SentDate;
-        TimeOnly SentTime;
-        string SenderID;
-        string RiceiverID;
     }
 
 }
-/* continut
- * id
- * ora timiteri
- * user
- * catre cine
- */ 

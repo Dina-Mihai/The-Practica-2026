@@ -8,7 +8,7 @@ namespace ChatApp.Application.DTOs.PublicUser
 {
     public class UserDTO
     {
-        public string UserName { get; set; }
+        public string Name { get; set; }
         public int ID { get; set; }
         //nu cred ca mai am nevoie de al ceva aici
         //este vro problema daca mai fac foldare separat pt fiecare conexiune?
