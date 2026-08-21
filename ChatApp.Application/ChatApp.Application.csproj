@@ -10,8 +10,4 @@
     <ProjectReference Include="..\ChatApp.Domain\ChatApp.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>

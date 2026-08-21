@@ -1,3 +1,4 @@
+using ChatApp.Application.Interfaces;
 using ChatApp.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(
     builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddIUserRepository<IUserRepository>();
 
 var app = builder.Build();
 

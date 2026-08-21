@@ -10,13 +10,12 @@ namespace ChatApp.Application.DTOs.PublicMassage
 {
     public static class MassageMapper
     {
-        public static MessageDTO MapToDTO(Message message)
+        public static MessageDTO MapToDTO_Message(Message message)
         {
-            return new MessageDTO
+            return new MessageDTO//nu stiu de la ce e erroare
             {
                 SentTimeAndDate = $"{message.SentDate} {message.SentTime}",
-                SenderID = message.SenderID,
-                ReceiverID = message.ReceiverID
+                SenderID = message.SenderID
 
             };
         }
