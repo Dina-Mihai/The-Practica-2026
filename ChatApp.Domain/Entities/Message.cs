@@ -15,12 +15,12 @@ namespace ChatApp.Domain.Entities
         public string SenderID { get; set; }
         public string ReceiverID { get; set; }
 
-        public Message(DateOnly Sent_date , TimeOnly Sent_time, string Sender_id, string Riciver_id)
+        public Message(DateOnly Sent_date , TimeOnly Sent_time, string Sender_id, string Receiver_id)
         {
             SentDate = Sent_date;
             SentTime = Sent_time;
             SenderID = Sender_id;
-            ReceiverID = Riciver_id;
+            ReceiverID = Receiver_id;
         }
 
 

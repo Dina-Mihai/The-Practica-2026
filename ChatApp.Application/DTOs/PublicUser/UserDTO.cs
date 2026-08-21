@@ -10,8 +10,6 @@ namespace ChatApp.Application.DTOs.PublicUser
     {
         public string UserName { get; set; }
         public int UserID { get; set; }
-        //nu cred ca mai am nevoie de al ceva aici
-        //este vro problema daca mai fac foldare separat pt fiecare conexiune?
 
     }
 }

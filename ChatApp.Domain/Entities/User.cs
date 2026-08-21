@@ -21,14 +21,3 @@ namespace ChatApp.Domain.Entities
         }
     }
 }
-
-
-/*clase: user:-nume
- *            -parola
- *            -adresa de mail
- *            -user name
- *            -#poza
- *            -id
- *            -#data de creare
- */
-//nu am acces la fiserul README.mb in visualstudio
