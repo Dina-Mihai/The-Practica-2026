@@ -1,4 +1,5 @@
-﻿using ChatApp.Domain.Entities;
+﻿using ChatApp.Application.DTOs.PublicRegister;
+using ChatApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace ChatApp.Application.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User?> GetByUsernameAsync(object username);
+        Task<User?> GetByUsernameAsync(string username);
+        
     }
 }

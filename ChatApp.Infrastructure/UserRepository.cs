@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Infrastructure
 {
-    public class UserRepository : DbContext
+    public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _context;
 

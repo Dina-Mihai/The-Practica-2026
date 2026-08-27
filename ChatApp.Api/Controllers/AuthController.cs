@@ -19,7 +19,7 @@ namespace ChatApp.Api.Controllers
             [HttpPost("register")]
             public async Task<IActionResult> Register_DTO(RegisterDTO request)
             {
-            var existingUser = await _userRepository.GetByUsernameAsync(request);
+            var existingUser = await _userRepository.GetByUsernameAsync(request.RegisterName);
             if (existingUser != null)
             {
                 return BadRequest(new { message = "User already taken!" });
@@ -40,7 +40,7 @@ namespace ChatApp.Api.Controllers
             [HttpPost("login")]
             public async Task<IActionResult> Login_DTO(LoginDTO request)
             {
-            var user = await _userRepository.GetByUsernameAsync(request);
+            var user = await _userRepository.GetByUsernameAsync(request.LoginEmail);
             if (_userRepository == null)
             {
                 return BadRequest(new { message = "The User is incorect" });

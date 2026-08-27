@@ -15,19 +15,6 @@ namespace ChatApp.Infrastructure.Database
         public DbSet<Conversation> Conversation { get; set; }
         public DbSet<ConversationParticipant> ConversationParticipant { get; set; }
 
-        public string DbPath { get; }
-
-        public AppDbContext()
-        {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "ChatApp.db");
-        }
-
-        
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source={DbPath}");
-
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,7 +28,6 @@ namespace ChatApp.Infrastructure.Database
                     .OnDelete(DeleteBehavior.Restrict);
 
             // user one to Coversation Participant many
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ConversationParticipant>()
                 .HasOne(u => u.User)
                 .WithMany(m => m.ConversationParticipants)
@@ -49,15 +35,13 @@ namespace ChatApp.Infrastructure.Database
                 .OnDelete(DeleteBehavior.Restrict);
 
             //Coversation Participant one  to Conversaton one
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ConversationParticipant>()
                 .HasOne(u => u.Conversation)
-                .WithMany( m => m.ConversationParticipants)
-                .HasForeignKey( m => m.ConversationID)//de ce am nevoie de <ConversationParticipant>?
+                .WithMany(m => m.ConversationParticipants)
+                .HasForeignKey(m => m.ConversationID)//de ce am nevoie de <ConversationParticipant>?
                 .OnDelete(DeleteBehavior.Restrict);
 
             //message many to conversation one
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Message>()
                     .HasOne(m => m.Conversation)
                     .WithMany(u => u.Messages)
@@ -69,6 +53,14 @@ namespace ChatApp.Infrastructure.Database
                 .IsUnique();
         }
         //dai update la migrare
-    }
+
+
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
+
+       
+
 
     }
+}

@@ -14,8 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(
     builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDbContext<UserRepository>(options => options.UseSqlite(
-    builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 var app = builder.Build();
 

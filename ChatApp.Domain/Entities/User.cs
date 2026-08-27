@@ -28,5 +28,7 @@ namespace ChatApp.Domain.Entities
         public User()
         {
         }
+
+       
     }
 }
