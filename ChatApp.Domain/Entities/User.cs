@@ -24,5 +24,9 @@ namespace ChatApp.Domain.Entities
             Message = themessages;
             ConversationParticipants = The_Participants;
         }
+
+        public User()
+        {
+        }
     }
 }

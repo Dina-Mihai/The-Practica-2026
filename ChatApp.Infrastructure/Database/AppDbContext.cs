@@ -50,10 +50,10 @@ namespace ChatApp.Infrastructure.Database
 
             //Coversation Participant one  to Conversaton one
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Conversation>()
-                .HasOne(u => u.ConversationParticipants)
-                .WithOne( m => m.Conversation)
-                .HasForeignKey<Conversation>( m => m.ConversationID)//de ce am nevoie de <ConversationParticipant>?
+            modelBuilder.Entity<ConversationParticipant>()
+                .HasOne(u => u.Conversation)
+                .WithMany( m => m.ConversationParticipants)
+                .HasForeignKey( m => m.ConversationID)//de ce am nevoie de <ConversationParticipant>?
                 .OnDelete(DeleteBehavior.Restrict);
 
             //message many to conversation one
@@ -63,7 +63,12 @@ namespace ChatApp.Infrastructure.Database
                     .WithMany(u => u.Messages)
                     .HasForeignKey(m => m.ConversationID)
                     .OnDelete(DeleteBehavior.Cascade);
+            // Prevent duplicate participant rows
+            modelBuilder.Entity<ConversationParticipant>()
+                .HasIndex(cp => new { cp.ConversationID, cp.User })
+                .IsUnique();
         }
+        //dai update la migrare
+    }
 
     }
-}

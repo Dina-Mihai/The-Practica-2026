@@ -1,4 +1,5 @@
-﻿using ChatApp.Domain.Entities;
+﻿using ChatApp.Application.DTOs.PublicRegister;
+using ChatApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,14 @@ namespace ChatApp.Application.DTOs.PublicUser
             return new UserDTO
             {
                 UserName = user.UserName,
-                UserID = user.Id
+                UserID = user.Id,
+                Email = user.Email,
+                Password = user.Password,
             };
 
         }
+
+      
     }
     
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Domain.Entities
 {
-    public class ConversationParticipant//imi laua 2 ore sa vad ca nuera clasa publica...
+    public class ConversationParticipant
     {
         public int ConversationID { get; set; }// daca am conversatin ID nu imi mai trebuie ID simplu, nu?
         public Conversation Conversation { get; set; }
@@ -20,6 +20,6 @@ namespace ChatApp.Domain.Entities
             UserID = id;
             Conversation = The_conversation;
         }
-        //test dc nu pot pune pe git
+      
     }
 }

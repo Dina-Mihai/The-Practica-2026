@@ -15,9 +15,9 @@ namespace ChatApp.Domain.Entities
         public Message SentTimeAndDate { get; set; }
         public ConversationParticipant ConversationID { get; set; }
         public List<Message>Messages { get; set; }
-        public ConversationParticipant ConversationParticipants { get; set; }
+        public List<ConversationParticipant> ConversationParticipants { get; set; }
 
-        public Conversation(int id, ConversationParticipant Conversation_id, Message Sent_time, List<Message> the_message, ConversationParticipant The_users ) 
+        public Conversation(int id, ConversationParticipant Conversation_id, Message Sent_time, List<Message> the_message, List<ConversationParticipant> The_users ) 
         {
             ID = id;
             SentTimeAndDate = Sent_time;

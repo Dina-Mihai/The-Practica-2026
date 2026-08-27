@@ -12,7 +12,7 @@ namespace ChatApp.Application.DTOs.PublicMassage
     {
         public static MessageDTO MapToDTO_Message(Message message)
         {
-            return new MessageDTO//nu stiu de la ce e erroare
+            return new MessageDTO
             {
                 SentTimeAndDate = $"{message.SentDate} {message.SentTime}",
                 SenderID = message.SenderID
