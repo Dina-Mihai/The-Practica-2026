@@ -19,38 +19,44 @@ namespace ChatApp.Infrastructure.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //mesaje many to user one
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Message>()
-                    .HasOne(m => m.Sender)
-                    .WithMany(u => u.Message)
-                    .HasForeignKey(m => m.SenderID)
-                    .OnDelete(DeleteBehavior.Restrict);
 
-            // user one to Coversation Participant many
             modelBuilder.Entity<ConversationParticipant>()
-                .HasOne(u => u.User)
-                .WithMany(m => m.ConversationParticipants)
-                .HasForeignKey(m => m.UserID)
+                 .HasKey(cp => new { cp.ConversationID, cp.UserID });
+
+            // message many to user one (sender)
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany(u => u.Message)
+                .HasForeignKey(m => m.SenderID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //Coversation Participant one  to Conversaton one
+            // user one to ConversationParticipant many
             modelBuilder.Entity<ConversationParticipant>()
-                .HasOne(u => u.Conversation)
-                .WithMany(m => m.ConversationParticipants)
-                .HasForeignKey(m => m.ConversationID)//de ce am nevoie de <ConversationParticipant>?
+                .HasOne(cp => cp.User)
+                .WithMany(u => u.ConversationParticipants)
+                .HasForeignKey(cp => cp.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //message many to conversation one
+            // ConversationParticipant one to Conversation one
+            modelBuilder.Entity<ConversationParticipant>()
+                .HasOne(cp => cp.Conversation)
+                .WithMany(c => c.ConversationParticipants)
+                .HasForeignKey(cp => cp.ConversationID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // message many to conversation one
             modelBuilder.Entity<Message>()
-                    .HasOne(m => m.Conversation)
-                    .WithMany(u => u.Messages)
-                    .HasForeignKey(m => m.ConversationID)
-                    .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(m => m.Conversation)
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.ConversationID)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Prevent duplicate participant rows
             modelBuilder.Entity<ConversationParticipant>()
-                .HasIndex(cp => new { cp.ConversationID, cp.User })
+                .HasIndex(cp => new { cp.ConversationID, cp.UserID })
                 .IsUnique();
+
         }
         //dai update la migrare
 

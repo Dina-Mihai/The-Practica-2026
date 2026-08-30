@@ -31,6 +31,10 @@ namespace ChatApp.Domain.Entities
             
 
         }
+        public Message()
+        {
+
+        }
 
 
     }

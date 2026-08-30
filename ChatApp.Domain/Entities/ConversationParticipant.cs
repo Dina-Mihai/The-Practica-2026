@@ -12,6 +12,7 @@ namespace ChatApp.Domain.Entities
         public Conversation Conversation { get; set; }
         public int UserID { get; set; }
         public User User { get; set; }
+ 
 
         public ConversationParticipant(int conversation_id, User user, int id, Conversation The_conversation)
         {
@@ -20,6 +21,10 @@ namespace ChatApp.Domain.Entities
             UserID = id;
             Conversation = The_conversation;
         }
-      
+        public ConversationParticipant()
+        {
+
+        }
+
     }
 }

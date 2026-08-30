@@ -12,8 +12,8 @@ namespace ChatApp.Domain.Entities
         public string Password { get; set; }
         public string Email { get; set; }
         public int Id { get; set; }
-        public List<Message> Message;
-        public List<ConversationParticipant> ConversationParticipants;
+        public List<Message> Message { get; set; }
+        public List<ConversationParticipant> ConversationParticipants { get; set; }
 
         public User(string userName, string password, string email, int id, List<Message> themessages, List<ConversationParticipant> The_Participants)
         {
@@ -27,6 +27,7 @@ namespace ChatApp.Domain.Entities
 
         public User()
         {
+            
         }
 
        

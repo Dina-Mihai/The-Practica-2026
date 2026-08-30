@@ -1,8 +1,9 @@
-﻿using ChatApp.Application.DTOs.PublicRegister;
-using ChatApp.Application.DTOs.PublicLogin;
+﻿using ChatApp.Application.DTOs.PublicLogin;
+using ChatApp.Application.DTOs.PublicRegister;
 using ChatApp.Application.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using ChatApp.Domain.Entities;
+using ChatApp.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApp.Api.Controllers
 {
@@ -11,7 +12,8 @@ namespace ChatApp.Api.Controllers
         public class AuthController : ControllerBase
         {
             private readonly IUserRepository _userRepository;
-            public AuthController(IUserRepository userRepository)
+            private readonly ITokenService _tokenService;
+        public AuthController(IUserRepository userRepository)
             {
                 _userRepository = userRepository;
             }
@@ -41,7 +43,7 @@ namespace ChatApp.Api.Controllers
             public async Task<IActionResult> Login_DTO(LoginDTO request)
             {
             var user = await _userRepository.GetByUsernameAsync(request.LoginEmail);
-            if (_userRepository == null)
+            if (user == null)
             {
                 return BadRequest(new { message = "The User is incorect" });
             }
@@ -50,8 +52,9 @@ namespace ChatApp.Api.Controllers
             {
                 return BadRequest(new { message = "The Password is incorect" });
             }
+            var generatedToken = _tokenService.GenerateToken(user);
 
-            return Ok(new { message = "Welcome back" });
+           return Ok(new { token = generatedToken });
 
             }
         }
