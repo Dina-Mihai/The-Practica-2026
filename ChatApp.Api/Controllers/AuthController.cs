@@ -13,10 +13,11 @@ namespace ChatApp.Api.Controllers
         {
             private readonly IUserRepository _userRepository;
             private readonly ITokenService _tokenService;
-        public AuthController(IUserRepository userRepository)
+        public AuthController(IUserRepository userRepository, ITokenService tokenService)
             {
                 _userRepository = userRepository;
-            }
+                _tokenService = tokenService;
+        }
 
             [HttpPost("register")]
             public async Task<IActionResult> Register_DTO(RegisterDTO request)
@@ -35,6 +36,7 @@ namespace ChatApp.Api.Controllers
                 Password = hashedPassword,
                 Email = request.RegisterEmail
             };
+            await _userRepository.AddAsync(user);
             return Ok(new { message = "New User Create" });
 
         }
