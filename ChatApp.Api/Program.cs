@@ -25,6 +25,8 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
+builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
+
 builder.Services.AddSignalR(options =>
 {
     options.EnableDetailedErrors = true;
