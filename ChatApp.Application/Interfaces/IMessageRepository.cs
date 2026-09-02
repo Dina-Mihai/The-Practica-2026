@@ -10,5 +10,6 @@ namespace ChatApp.Application.Interfaces
     public interface IMessageRepository
     {
         Task AddAsync(Message message);
+        Task<List<Message>> GetMessagesAsync(int conversationId, int page, int pageSize);
     }
 }

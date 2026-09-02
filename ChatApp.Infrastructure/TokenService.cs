@@ -32,6 +32,7 @@ namespace ChatApp.Infrastructure
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim("UserId", user.Id.ToString()),
+                new Claim("UserName", user.UserName),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };

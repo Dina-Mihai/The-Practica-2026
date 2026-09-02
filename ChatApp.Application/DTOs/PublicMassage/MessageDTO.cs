@@ -8,7 +8,10 @@ namespace ChatApp.Application.DTOs.PublicMassage
 {
     public class MessageDTO
     {
-        public string SentTimeAndDate { get; set; }
+        public int MessageID { get; set; }
         public int SenderID { get; set; }
+        public string SenderName { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+        public string SentTimeAndDate { get; set; } = string.Empty;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ChatApp.Application.Interfaces;
 using ChatApp.Domain.Entities;
 using ChatApp.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,20 @@ namespace ChatApp.Infrastructure
         {
             await _context.Messages.AddAsync(message);
             await _context.SaveChangesAsync();
+        }
+        public async Task<List<Message>> GetMessagesAsync(int conversationId, int page, int pageSize)
+        {
+            if (page < 1) page = 1;
+            if (pageSize < 1) pageSize = 20;
+
+            return await _context.Messages
+                .Where(m => m.ConversationID == conversationId)
+                .Include(m => m.Sender)
+                .OrderByDescending(m => m.SentDate)
+                .ThenByDescending(m => m.SentTime)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
     }
 }

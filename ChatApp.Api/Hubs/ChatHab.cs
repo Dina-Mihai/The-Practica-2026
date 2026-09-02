@@ -50,9 +50,10 @@ namespace ChatApp.Api.Hubs
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, conversationId);
         }
 
-        public async Task SendMessageToConversation(string conversationId, string user, string message)
+        public async Task SendMessageToConversation(string conversationId, string message)
         {
             var userId = GetUserId();
+            var userName = Context.User?.FindFirst("UserName")?.Value ?? "Necunoscut";
 
             if (!int.TryParse(conversationId, out int convId))
             {
@@ -76,7 +77,7 @@ namespace ChatApp.Api.Hubs
 
             await _messageRepository.AddAsync(newMessage);
 
-            await Clients.Group(conversationId).SendAsync("ReceiveMessage", user, message);
+            await Clients.Group(conversationId).SendAsync("ReceiveMessage", userName, message);
         }
     }
 }

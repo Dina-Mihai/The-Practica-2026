@@ -14,8 +14,11 @@ namespace ChatApp.Application.DTOs.PublicMassage
         {
             return new MessageDTO
             {
-                SentTimeAndDate = $"{message.SentDate} {message.SentTime}",
-                SenderID = message.SenderID
+                MessageID = message.MessageID,
+                SenderID = message.SenderID,
+                SenderName = message.Sender.UserName,
+                Content = message.Content,
+                SentTimeAndDate = $"{message.SentDate} {message.SentTime}"
 
             };
         }
