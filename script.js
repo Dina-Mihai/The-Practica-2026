@@ -1,16 +1,61 @@
-const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiVXNlcklkIjoiMiIsIlVzZXJOYW1lIjoiMTIzNCIsInVuaXF1ZV9uYW1lIjoiMTIzNCIsImp0aSI6IjUzMTE2M2QwLTVmNWEtNDMyOS1hZDY0LWVhZDllMDk2MzBiZiIsImV4cCI6MTc4ODM0MzQ2NSwiaXNzIjoiQ2hhdEFwcCIsImF1ZCI6IkNoYXRBcHBVc2VycyJ9.5aSwyd-GSeOzkBZsdiewYwbeV60I4QkDjt4tIONz4WI";
+let jwtToken = null;
+let connection = null;
 
-const connection = new signalR.HubConnectionBuilder()
-    .withUrl("https://localhost:7279/chatHub", {
-        accessTokenFactory: () => jwtToken
-    })
-    .build();
+document.getElementById("loginButton").addEventListener("click", async function () {
+    const username = document.getElementById("loginUsername").value;
+    const password = document.getElementById("loginPassword").value;
+    const statusEl = document.getElementById("loginStatus");
 
-connection.on("ReceiveMessage", function (user, message) {
-    const li = document.createElement("li");
-    li.textContent = user + ": " + message;
-    document.getElementById("messagesList").appendChild(li);
+    try {
+        const response = await fetch("https://localhost:7279/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                loginEmail: username,     
+                loginPassword: password
+            })
+        });
+
+        if (!response.ok) {
+            statusEl.textContent = "Login esuat: " + response.status;
+            return;
+        }
+
+        const data = await response.json();
+        jwtToken = data.token;
+
+        statusEl.textContent = "Autentificat cu succes!";
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("chatSection").style.display = "block";
+
+        await startChatConnection();
+    } catch (err) {
+        statusEl.textContent = "Eroare la login: " + err;
+    }
 });
+
+async function startChatConnection() {
+    connection = new signalR.HubConnectionBuilder()
+        .withUrl("https://localhost:7279/chatHub", {
+            accessTokenFactory: () => jwtToken
+        })
+        .build();
+
+    connection.on("ReceiveMessage", function (user, message) {
+        const li = document.createElement("li");
+        li.textContent = user + ": " + message;
+        document.getElementById("messagesList").appendChild(li);
+    });
+
+    await connection.start();
+    console.log("Conectat la ChatHub!");
+
+    await loadHistory("1");
+    await connection.invoke("JoinConversation", "1");
+    console.log("M-am alaturat conversatiei 1");
+}
 
 async function loadHistory(conversationId) {
     try {
@@ -26,7 +71,6 @@ async function loadHistory(conversationId) {
         }
 
         const messages = await response.json();
-
         document.getElementById("messagesList").innerHTML = "";
 
         messages.reverse().forEach(function (msg) {
@@ -39,22 +83,9 @@ async function loadHistory(conversationId) {
     }
 }
 
-connection.start()
-    .then(async function () {
-        console.log("Conectat la ChatHub!");
-        await loadHistory("1");
-        return connection.invoke("JoinConversation", "1");
-    })
-    .then(function () {
-        console.log("M-am alaturat conversatiei 1");
-    })
-    .catch(function (err) {
-        console.error("Eroare la conectare/join:", err);
-    });
-
 document.getElementById("sendButton").addEventListener("click", function () {
     const message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessageToConversation", "1", message)   
+    connection.invoke("SendMessageToConversation", "1", message)
         .catch(function (err) {
             console.error("Eroare la trimitere:", err);
         });
