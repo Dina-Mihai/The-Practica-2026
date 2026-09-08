@@ -7,13 +7,21 @@
 </head>
 <body>
     <h2>Login</h2>
-    <div id="loginSection">
+    <div id="loginSection" >
         <input id="loginUsername" type="text" placeholder="Username..." />
         <input id="loginPassword" type="password" placeholder="Parola..." />
         <button id="loginButton">Login</button>
         <p id="loginStatus"></p>
     </div>
+    <div id="conversationSection" style="display: none;">
+        <h3>Conversatiile tale</h3>
+        <ul id="conversationsList"></ul>
 
+        <h4>Alege o conversatie</h4>
+        <input id="participantIdsInput" type="text" placeholder="ID-uri participanti" />
+        <input id="conversationNameInput" type="text" placeholder="Nume conversatie (optional)" />
+        <button id="createConversationButton">Sellect</button>
+    </div>
     <div id="chatSection" style="display: none;">
         <h2>Test Chat</h2>
         <input id="messageInput" type="text" placeholder="Scrie un mesaj..." />

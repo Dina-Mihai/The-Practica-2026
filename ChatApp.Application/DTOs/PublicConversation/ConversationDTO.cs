@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApp.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace ChatApp.Application.DTOs.PublicConversation
     public class ConversationDTO
     {
         public int ConversationID { get; set; }
+        public string ConversationName { get; set; }
     }
 }

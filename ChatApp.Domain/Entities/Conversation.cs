@@ -13,7 +13,7 @@ namespace ChatApp.Domain.Entities
 
         public int ID { get; set; }
         public DateTime SentTimeAndDate { get; set; }
-        
+        public string ConversationName { get; set; }
         public List<Message>Messages { get; set; }
         public List<ConversationParticipant> ConversationParticipants { get; set; }
 
@@ -21,7 +21,7 @@ namespace ChatApp.Domain.Entities
         {
             ID = id;
             SentTimeAndDate = Sent_time;
-            
+            ConversationName = "Conversation" + id;
             Messages = the_message;
             ConversationParticipants = The_users;
 

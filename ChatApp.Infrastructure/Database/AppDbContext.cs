@@ -58,7 +58,6 @@ namespace ChatApp.Infrastructure.Database
                 .IsUnique();
 
         }
-        //dai update la migrare
 
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

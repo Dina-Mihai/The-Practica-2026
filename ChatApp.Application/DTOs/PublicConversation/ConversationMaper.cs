@@ -13,7 +13,8 @@ namespace ChatApp.Application.DTOs.PublicConversation
         {
             return new ConversationDTO
             {
-                ConversationID = conversation.ID
+                ConversationID = conversation.ID,
+                ConversationName = conversation.ConversationName
             };
         }
     }

@@ -2,6 +2,7 @@
 using ChatApp.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ChatApp.Application.DTOs.PublicConversation;
 
 namespace ChatApp.Api.Controllers
 {
@@ -19,6 +20,40 @@ namespace ChatApp.Api.Controllers
         {
             _messageRepository = messageRepository;
             _conversationRepository = conversationRepository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMyConversations()
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+            if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
+            {
+                return Unauthorized();
+            }
+
+            var conversations = await _conversationRepository.GetUserConversationsAsync(userId);
+            var result = conversations.Select(ConversationMaper.MapToDTO);
+
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateConversation(CreateConversationDto request)
+        {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+            if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
+            {
+                return Unauthorized();
+            }
+
+            if (request.ParticipantIds == null || request.ParticipantIds.Count == 0)
+            {
+                return BadRequest("Trebuie specificat cel putin un participant.");
+            }
+
+            var conversation = await _conversationRepository.CreateConversationAsync(userId, request.ParticipantIds, request.ConversationName);
+
+            return Ok(new { conversationId = conversation.ID });
         }
 
         [HttpGet("{conversationId}/messages")]
@@ -45,5 +80,7 @@ namespace ChatApp.Api.Controllers
 
             return Ok(result);
         }
+
+   
     }
 }
